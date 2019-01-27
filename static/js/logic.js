@@ -1,6 +1,6 @@
 // Creating map object
 var myMap = L.map("map", {
-  center: [40.7, -73.95],
+  center: [36.7783, 119.4179],
   zoom: 11
 });
 
@@ -13,13 +13,10 @@ L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 }).addTo(myMap);
 
 // Store API query variables
-var baseURL = "https://data.cityofnewyork.us/resource/fhrw-4uyv.json?";
-var date = "$where=created_date between'2016-01-10T12:00:00' and '2017-01-01T14:00:00'";
-var complaint = "&complaint_type=Rodent";
-var limit = "&$limit=10000";
 
-// Assemble API query URL
-var url = baseURL + date + complaint + limit;
+
+
+var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // Grab the data with d3
 d3.json(url, function(response) {
@@ -37,7 +34,7 @@ d3.json(url, function(response) {
     if (location) {
 
       // Add a new marker to the cluster group and bind a pop-up
-      markers.addLayer(L.marker([location.coordinates[1], location.coordinates[0]])
+      markers.addLayer(L.marker([features.geometry.coordinates[1], features.geometry.coordinates[0]])
         .bindPopup(response[i].descriptor));
     }
 
